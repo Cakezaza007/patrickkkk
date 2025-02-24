@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คำนวณค่า BMI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2);
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        h2 {
+            color: #333;
+        }
+        h3 {
+            color: #555;
+        }
+        p {
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>คำนวณค่า BMI</h2>
+        <label for="height">ส่วนสูง (cm):</label>
+        <input type="number" id="height" oninput="calculateBMI()">
+        <br>
+        <label for="weight">น้ำหนัก (kg):</label>
+        <input type="number" id="weight" oninput="calculateBMI()">
+        <br>
+        <h3>ค่า BMI: <span id="bmi-result">-</span></h3>
+        <h3>เกณฑ์: <span id="bmi-category">-</span></h3>
+        <p id="bmi-advice"></p>
+    </div>
+    
+    <script>
+        function calculateBMI() {
+            let height = parseFloat(document.getElementById("height").value) / 100;
+            let weight = parseFloat(document.getElementById("weight").value);
+            let bmiResult = document.getElementById("bmi-result");
+            let bmiCategory = document.getElementById("bmi-category");
+            let bmiAdvice = document.getElementById("bmi-advice");
+            
+            if (!height || !weight) {
+                bmiResult.innerText = "-";
+                bmiCategory.innerText = "-";
+                bmiAdvice.innerText = "";
+                return;
+            }
+            
+            let bmi = weight / (height * height);
+            bmiResult.innerText = bmi.toFixed(2);
+            let category = "";
+            let advice = "";
+            
+            if (bmi < 18.5) {
+                category = "น้ำหนักน้อย (ผอม)";
+                advice = "คุณควรรับประทานอาหารให้เพียงพอและออกกำลังกายเพื่อเสริมสร้างกล้ามเนื้อ";
+            } else if (bmi >= 18.5 && bmi < 24.9) {
+                category = "น้ำหนักปกติ";
+                advice = "คุณมีน้ำหนักอยู่ในเกณฑ์ปกติ ควรรักษาสุขภาพให้ดีต่อไป";
+            } else if (bmi >= 25 && bmi < 29.9) {
+                category = "น้ำหนักเกิน";
+                advice = "ควรออกกำลังกายและควบคุมอาหารเพื่อลดน้ำหนัก";
+            } else {
+                category = "โรคอ้วน";
+                advice = "ควรปรึกษาผู้เชี่ยวชาญด้านสุขภาพเพื่อแนะนำแนวทางการลดน้ำหนักอย่างเหมาะสม";
+            }
+            
+            bmiCategory.innerText = category;
+            bmiAdvice.innerText = advice;
+        }
+    </script>
+</body>
+</html>
